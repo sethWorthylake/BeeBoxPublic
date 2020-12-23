@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1082
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BuzzBox", "BuzzBox\BuzzBox.vcxproj", "{FF835014-75E6-4507-AE3E-5E9A94093780}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF835014-75E6-4507-AE3E-5E9A94093780}.Debug|x64.ActiveCfg = Debug|x64
+		{FF835014-75E6-4507-AE3E-5E9A94093780}.Debug|x64.Build.0 = Debug|x64
+		{FF835014-75E6-4507-AE3E-5E9A94093780}.Debug|x86.ActiveCfg = Debug|Win32
+		{FF835014-75E6-4507-AE3E-5E9A94093780}.Debug|x86.Build.0 = Debug|Win32
+		{FF835014-75E6-4507-AE3E-5E9A94093780}.Release|x64.ActiveCfg = Release|x64
+		{FF835014-75E6-4507-AE3E-5E9A94093780}.Release|x64.Build.0 = Release|x64
+		{FF835014-75E6-4507-AE3E-5E9A94093780}.Release|x86.ActiveCfg = Release|Win32
+		{FF835014-75E6-4507-AE3E-5E9A94093780}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {490D5D33-E1FF-4F24-B755-1AFB5163D238}
+	EndGlobalSection
+EndGlobal
