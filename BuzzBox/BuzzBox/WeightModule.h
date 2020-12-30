@@ -12,13 +12,16 @@
 #define WEIGHTMODULE_H_
 
 
-
 class WeightModule
 {
+	//enum for clock & data ports? Maybe in body of program?
+	//consider after determining port limitations
 
 public:
 	WeightModule();
-	WeightModule(int clk_port, int data_port);
+	~WeightModule();
+	WeightModule(int clk_port, int data_port, int baud);
+	WeightModule(WeightModule && copy) noexcept;
 	void SetPortClock(int port_num);
 	void SetPortData(int port_num);
 	void Reset();
@@ -28,13 +31,16 @@ public:
 private:
 	//variables
 	float m_weight;
+	int m_clkprt;
+	int m_dataprt;
+	int m_baud;
 
 	//methods
 	void SetRate();
-	void Reset();
+	void InternalReset();
 	void StartClock();
 	bool Ready();
 };
 
-#endif // !_WEIGHTMODULE_
+#endif // ! WEIGHTMODULE_H_
 
