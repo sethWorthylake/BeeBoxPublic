@@ -125,9 +125,12 @@
   <ItemGroup>
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SDModule.cpp" />
+    <ClCompile Include="WeightModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data.h" />
+    <ClInclude Include="WeightModule.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
