@@ -11,6 +11,10 @@ Data::Data()
 
 }
 
+Data::~Data()
+{
+}
+
 Data::Data(float internal_temp, float external_temp, float humidity, float weight)
 {
 	m_internal_temp = internal_temp;

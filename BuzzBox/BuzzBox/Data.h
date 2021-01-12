@@ -25,6 +25,7 @@ private:
 
 public:
 	Data();
+	~Data();
 	Data(float internal_temp, float external_temp, float humidity, float weight);
 	Date getDate();
 	Time getTime();

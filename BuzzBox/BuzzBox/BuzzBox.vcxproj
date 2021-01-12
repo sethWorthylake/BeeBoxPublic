@@ -123,14 +123,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BluetoothModule.cpp" />
+    <ClCompile Include="Bluetooth_Control.cpp" />
     <ClCompile Include="Data.cpp" />
+    <ClCompile Include="Data_Storage.cpp" />
+    <ClCompile Include="Hive_Monitor.cpp" />
+    <ClCompile Include="HumidityModule.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SDModule.cpp" />
+    <ClCompile Include="Sensor_Control.cpp" />
+    <ClCompile Include="Status_Control.cpp" />
+    <ClCompile Include="TemperatureModule.cpp" />
     <ClCompile Include="WeightModule.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BluetoothModule.h" />
+    <ClInclude Include="Bluetooth_Control.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="Data_Storage.h" />
+    <ClInclude Include="Hive_Monitor.h" />
+    <ClInclude Include="HumidityModule.h" />
     <ClInclude Include="SDModule.h" />
+    <ClInclude Include="Sensor_Control.h" />
+    <ClInclude Include="Status_Control.h" />
+    <ClInclude Include="TemperatureModule.h" />
     <ClInclude Include="WeightModule.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
