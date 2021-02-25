@@ -47,7 +47,7 @@ int Bluetooth_Control::readyToSend(Data info)
 	
 	clearStop();
 	TimeInterrupt.begin(PRECISION);
-	TimeInterrupt.addInterrupt(setStop,30000);	// in 1 minute stop this function
+	TimeInterrupt.addInterrupt(setStop,30000);	// in 0.5 minute stop this function
 	
 	while(stop == 0)
 	{
@@ -86,19 +86,34 @@ void Bluetooth_Control::sending(Data info)
 	char buff[15];
 	String string2Send = "";
 	float data[4] = {info.m_internal_temp,info.m_external_temp,info.m_humidity,info.m_weight};
-  
+	int time[5] = {info.getHour(),info.getMinute(),info.getMonth(),info.getDay(),info.getYear()}; 
+	
 	for(int ii =0; ii < 4;ii++)
 	{
 		dtostrf(data[ii], width, precision, buff); 
 		string2Send += buff;
-		if(ii != 3)
-			string2Send += ',';
+		
+		string2Send += ',';
 	
 		for(int ff = 0; ff < 15;ff++)
 		{
 			buff[ff] = 0;
 		}
 	}
+	
+	for(int ii =0; ii < 5;ii++)
+	{
+		itoa(time[ii],buff,10);
+		string2Send += buff;
+		if(ii != 4)
+			string2Send += ',';
+		
+		for(int ff = 0; ff < 15;ff++)
+		{
+			buff[ff] = 0;
+		}
+	}
+	
 	//Serial.write(string2Send.c_str()); // take out
 	Serial1.write(string2Send.c_str());
 }
