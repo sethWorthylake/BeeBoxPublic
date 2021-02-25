@@ -1,36 +1,31 @@
-#include "Data.h"
-
-Data::Data()
+#pragma once
+#include "RTClib.h"	//Uses RTC library
+					// A big idea is that no other class has to have the RTClib library to use this class 
+class Data
 {
-	m_internal_temp = 0.0;
-	m_external_temp = 0.0;
-	m_humidity = 0.0;
-	m_weight = 0.0;
-	//m_date = system date
-	//m_time = system time
+public:
+	float m_internal_temp;
+	float m_external_temp;
+	float m_humidity;
+	float m_weight;
+	DateTime m_time;
+ 
 
-}
+private:
+	static RTC_DS3231 m_rtc;
+	static int m_connection;  
 
-Data::~Data()
-{
-}
+public:
+	Data();	
+	~Data();
+	Data(float internal_temp, float external_temp, float humidity, float weight);
+	Data(float internal_temp, float external_temp, float humidity, float weight, DateTime m_time); 
+	Data(const Data & copy);	//Copy CTOR
+	void updateTime();	//Updates the Data Objects m_time to the current date+time
+	int getYear();	
+	int getMonth();
+	int getDay();
+	int getHour();
+	int getMinute();
 
-Data::Data(float internal_temp, float external_temp, float humidity, float weight)
-{
-	m_internal_temp = internal_temp;
-	m_external_temp = external_temp;
-	m_humidity = humidity;
-	m_weight = weight;
-	//m_date = system date
-	//m_time = system time
-}
-
-Date Data::getDate()
-{
-	return Date();
-}
-
-Time Data::getTime()
-{
-	return Time();
-}
+};
