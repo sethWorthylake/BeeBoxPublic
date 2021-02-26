@@ -55,6 +55,9 @@
     <ClInclude Include="Code\WeightModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="__vm\.BuzzBoxVisualMicro.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Code\Bluetooth_Control.cpp">
