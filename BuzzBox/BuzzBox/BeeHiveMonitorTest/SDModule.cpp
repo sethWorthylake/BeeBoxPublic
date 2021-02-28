@@ -19,13 +19,14 @@ int SDModule::setup()
 	return retval;
 }
 
-int SDModule::write(String data,int year, int month)
+int SDModule::write(Data info)
 {
+	String data = info.toString();
 	String fileName;	// We break up the files by the datas year and month
 	
-	fileName += String(month);
+	fileName += String(info.getMonth());
 	fileName += '_';
-	fileName += String(year);
+	fileName += String(info.getYear());
 	fileName += ".TXT";
 	
 	int retval = 0;		//return value 0 is fail 1 is success

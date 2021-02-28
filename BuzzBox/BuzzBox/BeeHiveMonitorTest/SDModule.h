@@ -42,6 +42,7 @@
 
 #include <SPI.h>
 #include <SD.h>		//probably change these to " " and have the files in the folder
+#include "Data.h"
 
 class SDModule
 {
@@ -51,7 +52,7 @@ public:
 	~SDModule();
 	SDModule(const SDModule & copy);
 	int setup();
-	int write(String data,int year,int month);
+	int write(Data info);
 	void readToBluetooth();
 	
 private:

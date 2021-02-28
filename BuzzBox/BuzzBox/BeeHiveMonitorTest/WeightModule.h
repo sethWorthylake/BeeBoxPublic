@@ -18,7 +18,7 @@ class WeightModule
 	//consider after determining port limitations
 
 public:
-	WeightModule();
+	WeightModule(int port);
 	~WeightModule();
 	WeightModule(int clk_port, int data_port, int baud);
 	WeightModule(WeightModule && copy) noexcept;
@@ -43,4 +43,3 @@ private:
 };
 
 #endif // ! WEIGHTMODULE_H_
-

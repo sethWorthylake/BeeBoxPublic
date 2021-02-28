@@ -13,7 +13,7 @@
 //~~~~~~~ PUBLIC METHODS ~~~~~~~~~
 
 //Default ports TBD
-WeightModule::WeightModule()
+WeightModule::WeightModule(int port)
 {
 	m_weight = 0.0;
 	//m_clkprt = 0;
@@ -25,7 +25,7 @@ WeightModule::~WeightModule()
 {}
 
 //Default ports TBD
-WeightModule::WeightModule(int clk_port = 0, int data_port = 1, int baud)
+WeightModule::WeightModule(int clk_port = 0, int data_port = 1, int baud = 9600)
 {
 	m_weight = 0.0;
 	//Update with correct port limitations
@@ -76,6 +76,11 @@ void WeightModule::Measure()
 	//STEPS:
 	//	1. Verify baud rate
 	//	2. Start the clock
+}
+
+float WeightModule::Get_Data()
+{
+	return 0.0f;
 }
 
 //~~~~~~~ PRIVATE METHODS ~~~~~~~~~
