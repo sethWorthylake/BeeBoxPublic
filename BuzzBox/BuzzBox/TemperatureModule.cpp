@@ -1,11 +1,10 @@
 #include "TemperatureModule.h"
 
-TemperatureModule::TemperatureModule()
+TemperatureModule::TemperatureModule(int port) : m_tempSensor(port)
 {
-
 }
 
 float TemperatureModule::collectTemp()
 {
-	return 0.0;
+	return m_tempSensor.getTempC();
 }

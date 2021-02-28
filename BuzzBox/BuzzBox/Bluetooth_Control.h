@@ -1,9 +1,9 @@
 #pragma once
 #include <TimeInterrupt.h>
 #include "Data.h"
+#include "SDModule.h"
 
-#define TxD 18
-#define RxD 19	//maybe need to take out to larger project
+#define MINUTE 60000	// Minute defintion for how long to wait
 
 static int stop; // interupt change this global which will let the bluetooth know to stop listening
 void setStop();	//Function that interupt calls to change global to a one
@@ -12,18 +12,19 @@ void clearStop(); // function to set global to zero
 class Bluetooth_Control
 {
 private:
-	
+	SDModule & m_SDModule;	// reff to the SD module
+	int m_TxD;	//the Transmit port
+	int m_RxD;	// the Recieve port 
 public:
 
-	Bluetooth_Control();	//Ctor	Only one should exist at a time
+	Bluetooth_Control(SDModule & sdRef,int TxD, int RxD);	//Ctor	Only one should exist at a time
+	
 	~Bluetooth_Control();	// Dtor
 	void Setup();	// Call during setup 
-	void turnOn();	//turns it on 
-	void turnOff();	//turns it off
-			// Need to add function that iterates through the Data_Container and sends each instance of data in it
-	int readyToSend(Data info);	// Will wait for the code, then send the data	
-	void sending(Data info); //Actually sending the data
+	void turnOn();	//turns it on               actually just enables the Serial  
+	void turnOff();	//turns it off				just disables the Serial. Not worth doing
 	int available();	// Is there anything on the serial line from bluetooth
-	
+	int readyToSend();	// Call this when we are ready to send cause the Bluetooth button got presed
+						// IT WILL WAIT FOR 5 MINUTES WHILE IN THIS FUNCTION!!!
 	
 };

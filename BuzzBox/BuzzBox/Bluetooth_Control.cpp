@@ -10,115 +10,77 @@ void clearStop()
 	stop = 0;
 }
 
-Bluetooth_Control::Bluetooth_Control()
+Bluetooth_Control::Bluetooth_Control(SDModule & sdRef,int TxD, int RxD) : m_SDModule(sdRef),m_TxD(TxD),m_RxD(RxD)
 {}
+
 Bluetooth_Control::~Bluetooth_Control()
 {}
 
 void Bluetooth_Control::Setup()
 {
-	pinMode(RxD, INPUT);
-    pinMode(TxD, OUTPUT);
+	pinMode(m_RxD, INPUT);
+    pinMode(m_TxD, OUTPUT);
 }
 
 void Bluetooth_Control::turnOn()
 {
 	Serial.begin(9600);
-    Serial.println("Enter AT commands:");
+    //Serial.println("Enter AT commands:");
     //BTserial.begin(38400);
-    Serial1.begin(38400);
-    Serial.println("BTserial started at 38400");
+    Serial1.begin(38400);	
+    //Serial.println("BTserial started at 38400");	// can probably get rid of this
 }
 
 void Bluetooth_Control::turnOff()
 {
-	Serial.end();
+	Serial.end();	// Not worth calling
 	Serial1.end();
 }
 
-int Bluetooth_Control::readyToSend(Data info)
+int Bluetooth_Control::available()
 {
-	char hello[] = { 'S','E','T','H','W' };
-	char c = ' ';
-	int index = 0;
-	int sentIt = 0;
-	int minute = 60000;
-	int fiveMinutes = minute * 5; 
+	return Serial1.available();	// returns if there is serial communication from the bluetooth waiting
+}
+
+int Bluetooth_Control::readyToSend()
+{
+	char hello[] = { 'S','E','T','H','W' };	// Secret code that when recieved we will send all data to the Bluetooth
+	char c = ' ';	// Character pointer 
+	int index = 0;	// current index of the code
+	int sentIt = 0;	// Have we sent the stuff
+	int delay = MINUTE * 3; 
 	
-	clearStop();
-	TimeInterrupt.begin(PRECISION);
-	TimeInterrupt.addInterrupt(setStop,30000);	// in 0.5 minute stop this function
+	clearStop();	// Clear the global 
+	TimeInterrupt.begin(PRECISION);	// Set the interupt mode to precise
+	TimeInterrupt.addInterrupt(setStop,delay);	// in delay time: call the setStop function 
 	
 	while(stop == 0)
 	{
 		if (Serial1.available())
 		{
 			c = Serial1.read();
-			Serial.write(c);   
 			if (c == hello[index])
 			{
 				if (index == 4)
 				{
+					
 					index = 0;
-					Serial.write("Sending\r\n");
 					sentIt = 1;
-					sending(info);
-					setStop();
+					TimeInterrupt.removeInterrupt(setStop);	// disable that interupt
+					setStop();							// set the stop bit 
+					m_SDModule.readToBluetooth();		// give the SD the go ahead to send
+
 				}
 				else
 					index++;
 			}
 			else
-				setStop();
+				setStop();	// We got junk data so stop waiting 
 		}
 
 	}
-
-	TimeInterrupt.removeInterrupt(setStop);
-	return sentIt;
-}
-
-void Bluetooth_Control::sending(Data info)
-{
-	Serial.write("\r\nWriting Data\r\n");
-	int width = 4;
-	int precision = 6;
-	char buff[15];
-	String string2Send = "";
-	float data[4] = {info.m_internal_temp,info.m_external_temp,info.m_humidity,info.m_weight};
-	int time[5] = {info.getHour(),info.getMinute(),info.getMonth(),info.getDay(),info.getYear()}; 
+	if(sentIt == 0)
+		TimeInterrupt.removeInterrupt(setStop);	// Remove if we didnt in the loop
 	
-	for(int ii =0; ii < 4;ii++)
-	{
-		dtostrf(data[ii], width, precision, buff); 
-		string2Send += buff;
-		
-		string2Send += ',';
-	
-		for(int ff = 0; ff < 15;ff++)
-		{
-			buff[ff] = 0;
-		}
-	}
-	
-	for(int ii =0; ii < 5;ii++)
-	{
-		itoa(time[ii],buff,10);
-		string2Send += buff;
-		if(ii != 4)
-			string2Send += ',';
-		
-		for(int ff = 0; ff < 15;ff++)
-		{
-			buff[ff] = 0;
-		}
-	}
-	
-	//Serial.write(string2Send.c_str()); // take out
-	Serial1.write(string2Send.c_str());
-}
-
-int Bluetooth_Control::available()
-{
-	return Serial1.available();
+	return sentIt;	// return if we sent the files 
 }
