@@ -81,6 +81,11 @@ int Bluetooth_Control::readyToSend()
 	}
 	if(sentIt == 0)
 		TimeInterrupt.removeInterrupt(setStop);	// Remove if we didnt in the loop
-	
+
+  while(Serial1.available())
+  {
+      c = Serial1.read();     // Clear out the Bluetooth line ! There is commonly 5 Null characters that are sent after data transfer. Reason Unkown.
+  }
+  
 	return sentIt;	// return if we sent the files 
 }

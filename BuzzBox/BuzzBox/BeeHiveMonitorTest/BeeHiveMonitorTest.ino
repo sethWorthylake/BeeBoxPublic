@@ -151,7 +151,4 @@ void loop()
   Serial.flush();
   }
 
-     
- //
- //  Serial.println("Sd Confirmed Send");
 }
