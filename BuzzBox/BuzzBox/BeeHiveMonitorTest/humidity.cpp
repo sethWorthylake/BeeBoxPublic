@@ -16,7 +16,7 @@ humidity& humidity::operator=(const humidity& LHS)
 	{
 		m_dht = DHT(LHS.m_dht);
 	}
-	return *this;	// is this correct?
+	return *this;	
 }
 
 humidity::~humidity()
