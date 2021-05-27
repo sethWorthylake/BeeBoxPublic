@@ -1,46 +1,47 @@
 /*
-*	Author: Killian Laws
-*	Date: 02/13/2021
+*  Author: Killian Laws
+* Date: 02/13/2021
 *
-*
+* Modified Heavily By Seth Worthylake
 *
 *
 */
 
 #include "Weight_Driver.h"
+#include <EEPROM.h>
+
 
 //NOTE: Calibration factor must be set up for kilograms
-Weight_Driver::Weight_Driver(int dout, int clk) : m_weight(0.0),m_dout(dout),m_clk(clk),weightModule(dout,clk)
+Weight_Driver::Weight_Driver(int dout, int clk) : m_weight(0.0),m_dout(dout),m_clk(clk),weightModule(),calibration_factor(0)
 {
-	//WeightSetup();
+  weightModule.begin(dout, clk);
+  //weightModule.set_scale();
+  //weightModule.read_average();
 }
 
 Weight_Driver::~Weight_Driver()
 {
-	
+  
 }
 
 void Weight_Driver::WeightSetup()
 {
-	  weightModule.begin();
-  unsigned long stabilizingtime = 2000; // preciscion right after power-up can be improved by adding a few seconds of stabilizing time
-  weightModule.start(stabilizingtime, true);  // true says to do a tare
-  if (weightModule.getTareTimeoutFlag()) 
-  {
-    Serial.println("Check Weight Pin Connection");
-  }
-  else  
-    weightModule.setCalFactor(calibration_factor);            //Reset weight to 0
+  
+  EEPROM.get(0,calibration_factor );  //reads the EEPROM for the Calibration factor
+  
+  //if(calibration_factor == 0)
+  //  Serial.println("ITS ZERO");
+  //else
+  //  Serial.println(calibration_factor,5);   //take out
+  
+  weightModule.set_scale(calibration_factor);            //Sets the calibration factor
 }
 
 float Weight_Driver::GetWeight()
 {
-  while(!weightModule.update());
-  //weightModule.update();
-  
-	m_weight = weightModule.getData();
+  m_weight = weightModule.get_units(10) - baseWeight;
   if(m_weight < 0)
       m_weight = 0;
     
-	return m_weight;
+  return m_weight;
 }

@@ -6,10 +6,6 @@
 
 #define MINUTE 60000	// Minute defintion for how long to wait
 
-static int stop; // interupt change this global which will let the bluetooth know to stop listening
-void setStop();	//Function that interupt calls to change global to a one
-void clearStop(); // function to set global to zero
-
 class Bluetooth_Control
 {
 private:
